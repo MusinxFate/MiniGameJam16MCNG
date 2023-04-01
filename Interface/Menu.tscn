@@ -127,5 +127,6 @@ offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[connection signal="pressed" from="Play" to="Play" method="OnPlayButtonPressed"]
 [connection signal="pressed" from="Settings" to="Settings" method="OpenSettings"]
 [connection signal="pressed" from="Close" to="Close" method="CloseGame"]
