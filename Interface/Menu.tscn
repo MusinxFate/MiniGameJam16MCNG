@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjy125jqmp5vi"]
+[gd_scene load_steps=6 format=3 uid="uid://cjy125jqmp5vi"]
 
 [ext_resource type="Script" path="res://Interface/Settings.cs" id="1_yiflq"]
 [ext_resource type="Script" path="res://Interface/Close.cs" id="2_gmt6n"]
+[ext_resource type="Script" path="res://Interface/JoinGame.cs" id="3_0pqis"]
+[ext_resource type="Script" path="res://Interface/HostGame.cs" id="3_6kwo4"]
 [ext_resource type="Script" path="res://Interface/LineEdit.cs" id="3_hma0m"]
 
 [node name="Menu" type="Control"]
@@ -59,6 +61,7 @@ offset_bottom = 108.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Join Game"
+script = ExtResource("3_0pqis")
 
 [node name="HostGame" type="Button" parent="."]
 layout_mode = 1
@@ -75,6 +78,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Host Game
 "
+script = ExtResource("3_6kwo4")
 
 [node name="LineEdit" type="LineEdit" parent="."]
 layout_mode = 1
@@ -93,6 +97,35 @@ placeholder_text = "Ip Address"
 alignment = 1
 max_length = 15
 script = ExtResource("3_hma0m")
+
+[node name="LblStatus" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -4.0
+offset_right = -42.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Status:"
+
+[node name="LblMessageStatus" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -4.0
+offset_right = 22.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="Settings" to="Settings" method="OpenSettings"]
 [connection signal="pressed" from="Close" to="Close" method="CloseGame"]

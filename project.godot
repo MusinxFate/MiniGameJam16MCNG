@@ -15,6 +15,10 @@ run/main_scene="res://Interface/Menu.tscn"
 config/features=PackedStringArray("4.0", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Multiplayer="*res://Scripts/Multiplayer.cs"
+
 [display]
 
 window/size/resizable=false
