@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjy125jqmp5vi"]
+[gd_scene load_steps=4 format=3 uid="uid://cjy125jqmp5vi"]
 
+[ext_resource type="Script" path="res://Interface/Play.cs" id="1_li3lq"]
 [ext_resource type="Script" path="res://Interface/Settings.cs" id="1_yiflq"]
 [ext_resource type="Script" path="res://Interface/Close.cs" id="2_gmt6n"]
 
@@ -25,6 +26,7 @@ offset_bottom = 108.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Play"
+script = ExtResource("1_li3lq")
 
 [node name="Settings" type="Button" parent="."]
 layout_mode = 1
@@ -59,5 +61,6 @@ text = "Close
 "
 script = ExtResource("2_gmt6n")
 
+[connection signal="pressed" from="Play" to="Play" method="OnPlayButtonPressed"]
 [connection signal="pressed" from="Settings" to="Settings" method="OpenSettings"]
 [connection signal="pressed" from="Close" to="Close" method="CloseGame"]
