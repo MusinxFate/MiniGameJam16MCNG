@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "minijam16": {
+      "commandName": "Project"
+    },
+    "Perfil 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Godot4\\Godot_v4.0.1-stable_mono_win64.exe",
+      "commandLineArgs": "--path . --verbose",
+      "workingDirectory": ".",
+      "nativeDebugging": true
+    }
+  }
+}
