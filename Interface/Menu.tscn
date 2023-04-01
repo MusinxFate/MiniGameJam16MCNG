@@ -14,9 +14,9 @@ grow_vertical = 2
 [node name="Play" type="Button" parent="."]
 layout_mode = 0
 offset_left = 480.0
-offset_top = 380.0
+offset_top = 384.0
 offset_right = 672.0
-offset_bottom = 436.0
+offset_bottom = 432.0
 text = "Play"
 
 [node name="Settings" type="Button" parent="."]
@@ -31,9 +31,9 @@ script = ExtResource("1_yiflq")
 [node name="Close" type="Button" parent="."]
 layout_mode = 0
 offset_left = 480.0
-offset_top = 514.0
+offset_top = 512.0
 offset_right = 672.0
-offset_bottom = 562.0
+offset_bottom = 560.0
 text = "Close
 "
 script = ExtResource("2_gmt6n")
