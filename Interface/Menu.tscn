@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjy125jqmp5vi"]
+[gd_scene load_steps=4 format=3 uid="uid://cjy125jqmp5vi"]
 
 [ext_resource type="Script" path="res://Interface/Settings.cs" id="1_yiflq"]
 [ext_resource type="Script" path="res://Interface/Close.cs" id="2_gmt6n"]
+[ext_resource type="Script" path="res://Interface/LineEdit.cs" id="3_hma0m"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -10,21 +11,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Play" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -96.0
-offset_top = 60.0
-offset_right = 96.0
-offset_bottom = 108.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Play"
 
 [node name="Settings" type="Button" parent="."]
 layout_mode = 1
@@ -58,6 +44,55 @@ grow_vertical = 2
 text = "Close
 "
 script = ExtResource("2_gmt6n")
+
+[node name="JoinGame" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = 68.0
+offset_right = 96.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Join Game"
+
+[node name="HostGame" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -52.0
+offset_right = 96.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Host Game
+"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = 28.0
+offset_right = 96.0
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Ip Address"
+alignment = 1
+max_length = 15
+script = ExtResource("3_hma0m")
 
 [connection signal="pressed" from="Settings" to="Settings" method="OpenSettings"]
 [connection signal="pressed" from="Close" to="Close" method="CloseGame"]
