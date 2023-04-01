@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjy125jqmp5vi"]
+[gd_scene load_steps=7 format=3 uid="uid://cjy125jqmp5vi"]
 
 [ext_resource type="Script" path="res://Interface/Settings.cs" id="1_yiflq"]
 [ext_resource type="Script" path="res://Interface/Close.cs" id="2_gmt6n"]
 [ext_resource type="Script" path="res://Interface/JoinGame.cs" id="3_0pqis"]
 [ext_resource type="Script" path="res://Interface/HostGame.cs" id="3_6kwo4"]
 [ext_resource type="Script" path="res://Interface/LineEdit.cs" id="3_hma0m"]
+[ext_resource type="Script" path="res://Interface/Test.cs" id="5_gsbxt"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -80,6 +81,15 @@ text = "Host Game
 "
 script = ExtResource("3_6kwo4")
 
+[node name="Test" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1067.0
+offset_top = 17.0
+offset_right = 1133.0
+offset_bottom = 78.0
+text = "Test"
+script = ExtResource("5_gsbxt")
+
 [node name="LineEdit" type="LineEdit" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -127,6 +137,5 @@ offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[connection signal="pressed" from="Play" to="Play" method="OnPlayButtonPressed"]
 [connection signal="pressed" from="Settings" to="Settings" method="OpenSettings"]
 [connection signal="pressed" from="Close" to="Close" method="CloseGame"]
