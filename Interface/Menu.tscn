@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://cjy125jqmp5vi"]
+[gd_scene load_steps=3 format=3 uid="uid://cjy125jqmp5vi"]
+
+[ext_resource type="Script" path="res://Interface/Settings.cs" id="1_yiflq"]
+[ext_resource type="Script" path="res://Interface/Close.cs" id="2_gmt6n"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -23,6 +26,7 @@ offset_top = 448.0
 offset_right = 672.0
 offset_bottom = 496.0
 text = "Settings"
+script = ExtResource("1_yiflq")
 
 [node name="Close" type="Button" parent="."]
 layout_mode = 0
@@ -32,3 +36,7 @@ offset_right = 672.0
 offset_bottom = 562.0
 text = "Close
 "
+script = ExtResource("2_gmt6n")
+
+[connection signal="pressed" from="Settings" to="Settings" method="OpenSettings"]
+[connection signal="pressed" from="Close" to="Close" method="CloseGame"]
