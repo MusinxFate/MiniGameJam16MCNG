@@ -137,5 +137,13 @@ offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Name" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 232.0
+offset_right = 672.0
+offset_bottom = 263.0
+placeholder_text = "Enter your Name"
+
 [connection signal="pressed" from="Settings" to="Settings" method="OpenSettings"]
 [connection signal="pressed" from="Close" to="Close" method="CloseGame"]

@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://drs35s8vhahqr"]
+
+[ext_resource type="Texture2D" uid="uid://cc5xbyuxirdv0" path="res://Map/parallax-mountain-bg.png" id="1_qeaf5"]
+[ext_resource type="Texture2D" uid="uid://cjic13nkmekqv" path="res://Map/parallax-mountain-montain-far.png" id="2_wphcg"]
+[ext_resource type="Texture2D" uid="uid://c3u4e601mavuk" path="res://Map/parallax-mountain-mountains.png" id="3_u2ph0"]
+[ext_resource type="Texture2D" uid="uid://br3civ8s13tvo" path="res://Map/parallax-mountain-trees.png" id="4_w0bgj"]
+[ext_resource type="Texture2D" uid="uid://b7t0cmiqu5lnn" path="res://Map/parallax-mountain-foreground-trees.png" id="5_7yyei"]
+[ext_resource type="PackedScene" uid="uid://ch3ergly7jrd2" path="res://player.tscn" id="6_fjuow"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04xy3"]
+size = Vector2(0.99577, 0.291842)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Parallax-mountain-bg" type="Sprite2D" parent="."]
+position = Vector2(577, 323)
+scale = Vector2(4.22794, 4.075)
+texture = ExtResource("1_qeaf5")
+
+[node name="Parallax-mountain-montain-far2" type="Sprite2D" parent="Parallax-mountain-bg"]
+position = Vector2(55.5521, -40.0015)
+scale = Vector2(0.895877, 1.28223)
+texture = ExtResource("2_wphcg")
+
+[node name="Parallax-mountain-montain-far" type="Sprite2D" parent="Parallax-mountain-bg"]
+position = Vector2(-57.2383, -6.13497)
+scale = Vector2(0.704348, 1.03221)
+texture = ExtResource("2_wphcg")
+
+[node name="Parallax-mountain-mountains" type="Sprite2D" parent="Parallax-mountain-bg"]
+position = Vector2(26.3722, 6.62577)
+scale = Vector2(0.596956, 0.831288)
+texture = ExtResource("3_u2ph0")
+
+[node name="Parallax-mountain-trees" type="Sprite2D" parent="Parallax-mountain-bg"]
+position = Vector2(16.0835, -22.3313)
+scale = Vector2(0.563478, 1.29141)
+texture = ExtResource("4_w0bgj")
+
+[node name="Parallax-mountain-foreground-trees2" type="Sprite2D" parent="Parallax-mountain-bg"]
+position = Vector2(23.2974, -1.03645)
+scale = Vector2(0.643913, 0.842873)
+texture = ExtResource("5_7yyei")
+
+[node name="Parallax-mountain-foreground-trees" type="Sprite2D" parent="Parallax-mountain-bg"]
+position = Vector2(3.39997, 3.8957)
+scale = Vector2(0.688369, 0.907592)
+texture = ExtResource("5_7yyei")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(576.031, 628.954)
+rotation = 3.14159
+scale = Vector2(1157.42, -33.9652)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-0.001701, 0.503145)
+shape = SubResource("RectangleShape2D_04xy3")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("6_fjuow")]

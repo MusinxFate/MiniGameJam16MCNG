@@ -4,7 +4,7 @@ using System;
 public partial class Multiplayer : Node
 {
     ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
-
+    public string CharName = "";
     public override void _Ready()
     {
     }
