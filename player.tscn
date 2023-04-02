@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ch3ergly7jrd2"]
+[gd_scene load_steps=8 format=3 uid="uid://f5i77p21hdjc"]
 
-[ext_resource type="Script" path="res://Interface/CharacterBody2D.cs" id="1_rf52v"]
+[ext_resource type="Script" path="res://Interface/Player.cs" id="1_niy8i"]
 [ext_resource type="Texture2D" uid="uid://cyreg6vmsiigp" path="res://Player/Character Idle 48x48.png" id="2_hwodv"]
+[ext_resource type="Script" path="res://Inputs.cs" id="3_nbiby"]
 
 [sub_resource type="Animation" id="Animation_pjdh5"]
 length = 0.001
@@ -92,9 +93,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d6k5h"]
 size = Vector2(41, 63)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 position = Vector2(68, 556)
-script = ExtResource("1_rf52v")
+script = ExtResource("1_niy8i")
 
 [node name="CharacterIdle48x48" type="Sprite2D" parent="."]
 position = Vector2(0, -1.5)
@@ -117,3 +118,10 @@ offset_top = -60.0
 offset_right = 61.0
 offset_bottom = -34.0
 horizontal_alignment = 1
+
+[node name="Inputs" type="Node" parent="."]
+script = ExtResource("3_nbiby")
+
+[node name="InputsSync" type="MultiplayerSynchronizer" parent="Inputs"]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

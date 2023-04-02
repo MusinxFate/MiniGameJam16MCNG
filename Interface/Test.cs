@@ -14,9 +14,8 @@ public partial class Test : Button
         var nameLineEdit = (Godot.LineEdit)GetNode("/root/Menu/Name");
         var mpinfo = (Multiplayer)GetNode("/root/Multiplayer");
         mpinfo.CharName = nameLineEdit.Text;
-        GetTree().ChangeSceneToFile("res://Interface/Scenario.tscn");
+        GetTree().ChangeSceneToFile("res://Interface/scenario.tscn");
     }
-
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)

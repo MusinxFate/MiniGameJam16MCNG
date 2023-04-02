@@ -1,19 +1,13 @@
 using Godot;
 using System;
 
-public partial class JoinGame : Button
+public partial class scenario : Node2D
 {
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        this.Pressed += JoinGame_Pressed;
-    }
-
-    private void JoinGame_Pressed()
-    {
-        var x = (Multiplayer)GetNode("/root/Multiplayer");
-        x.JoinServer();
-        x.GetName();
+        var player = (PackedScene)ResourceLoader.Load("res://player.tscn");
+        GetNode("/root/Scenario").AddChild(player.Instantiate<Player>());
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

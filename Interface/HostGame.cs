@@ -12,6 +12,7 @@ public partial class HostGame : Button
     {
         var x = (Multiplayer)GetNode("/root/Multiplayer");
         x.CreateServer();
+        x.GetName();
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

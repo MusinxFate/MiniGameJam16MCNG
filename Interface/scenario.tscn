@@ -1,16 +1,17 @@
 [gd_scene load_steps=8 format=3 uid="uid://drs35s8vhahqr"]
 
+[ext_resource type="Script" path="res://Interface/scenario.cs" id="1_dgih0"]
 [ext_resource type="Texture2D" uid="uid://cc5xbyuxirdv0" path="res://Map/parallax-mountain-bg.png" id="1_qeaf5"]
 [ext_resource type="Texture2D" uid="uid://cjic13nkmekqv" path="res://Map/parallax-mountain-montain-far.png" id="2_wphcg"]
 [ext_resource type="Texture2D" uid="uid://c3u4e601mavuk" path="res://Map/parallax-mountain-mountains.png" id="3_u2ph0"]
 [ext_resource type="Texture2D" uid="uid://br3civ8s13tvo" path="res://Map/parallax-mountain-trees.png" id="4_w0bgj"]
 [ext_resource type="Texture2D" uid="uid://b7t0cmiqu5lnn" path="res://Map/parallax-mountain-foreground-trees.png" id="5_7yyei"]
-[ext_resource type="PackedScene" uid="uid://ch3ergly7jrd2" path="res://player.tscn" id="6_fjuow"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_04xy3"]
 size = Vector2(0.99577, 0.291842)
 
-[node name="Node2D" type="Node2D"]
+[node name="Scenario" type="Node2D"]
+script = ExtResource("1_dgih0")
 
 [node name="Parallax-mountain-bg" type="Sprite2D" parent="."]
 position = Vector2(577, 323)
@@ -56,4 +57,7 @@ scale = Vector2(1157.42, -33.9652)
 position = Vector2(-0.001701, 0.503145)
 shape = SubResource("RectangleShape2D_04xy3")
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("6_fjuow")]
+[node name="Players" type="Node2D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../Players")
