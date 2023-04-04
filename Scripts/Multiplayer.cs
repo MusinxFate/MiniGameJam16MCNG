@@ -6,12 +6,13 @@ using System.Text.RegularExpressions;
 
 public partial class Multiplayer : Node
 {
-    ENetMultiplayerPeer peer = null;
+    ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
     public string CharName = "";
     Dictionary<long, string> playerList = new Dictionary<long, string>();
 
     public override void _Ready()
     {
+        peer.PeerConnected += Peer_PeerConnected;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,7 +22,6 @@ public partial class Multiplayer : Node
 
     public void CreateServer()
     {
-        peer = new ENetMultiplayerPeer();
         peer.CreateServer(4321, 999);
         MultiplayerApi mp = MultiplayerApi.CreateDefaultInterface();
         mp.MultiplayerPeer = peer;
@@ -40,13 +40,15 @@ public partial class Multiplayer : Node
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void RegisterPlayer(string playerName)
     {
-        if (Multiplayer.IsServer())
+        long id = Multiplayer.GetRemoteSenderId();
+        playerList.Add(id, playerName);
+
+        if (Multiplayer.GetUniqueId() == 1)
         {
             CreatePlayer(playerName);
         }
 
-        long id = Multiplayer.GetRemoteSenderId();
-        playerList.Add(id, playerName);
+        GD.Print($"Pinto do {playerName}");
     }
 
     public void CreatePlayer(string playerName)
@@ -59,6 +61,8 @@ public partial class Multiplayer : Node
         pl.syncPos = new Vector2(80, 520);
         pl.Name = id.ToString();
         pl.SetPlayerNickname(playerName);
+
+        GD.Print(playerName);
 
         scen.GetNode("Players").AddChild(pl);
     }
@@ -82,15 +86,13 @@ public partial class Multiplayer : Node
         GetNode<Control>("/root/Menu").Hide();
     }
 
-
-
-    private void Mp_ConnectedToServer()
-    {
-        var txtLabel = (Label)GetNode("/root/Menu/LblMessageStatus");
-        txtLabel.Text = "Connected";
-        var id = Multiplayer.GetRemoteSenderId();
-        RpcId(id, nameof(LoadWorld));
-    }
+    //private void Mp_ConnectedToServer()
+    //{
+    //    var txtLabel = (Label)GetNode("/root/Menu/LblMessageStatus");
+    //    txtLabel.Text = "Connected";
+    //    var id = Multiplayer.GetRemoteSenderId();
+    //    RpcId(id, nameof(LoadWorld));
+    //}
 
     public void BeginGame()
     {
