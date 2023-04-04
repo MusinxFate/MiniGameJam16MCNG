@@ -1,11 +1,14 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 public partial class Multiplayer : Node
 {
     ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
     public string CharName = "";
+    Dictionary<long, string> playerList = new Dictionary<long, string>();
+
     public override void _Ready()
     {
     }
@@ -26,17 +29,38 @@ public partial class Multiplayer : Node
         txtLabel.Text = "Hosting...";
 
 
-        GetTree().ChangeSceneToFile("res://Interface/scenario.tscn");
-        //var player = (PackedScene)ResourceLoader.Load("res://player.tscn");
-        //GetNode("/root/Scenario").AddChild(player.Instantiate<Player>());
+        //var packedscenario = ResourceLoader.Load<PackedScene>("res://Interface/scenario.tscn");
+        //var scenarioobj = packedscenario.Instantiate<scenario>();
+        //GetTree().Root.AddChild(scenarioobj);
+        //GetTree().Root.RemoveChild(GetNode("Menu"));
+
+        LoadWorld();
+
+        var scenario = GetTree().Root.GetNode("Scenario");
+        PackedScene playerScene = ResourceLoader.Load<PackedScene>("res://player.tscn");
+
+        var spawnpos = scenario.GetNode<Marker2D>("Spawn/Point").Position;
+        var player = playerScene.Instantiate<Player>();
+        player.syncPos = spawnpos;
+        player.Position = spawnpos;
+        scenario.AddChild(player);
+
 
         peer.PeerConnected += Peer_PeerConnected;
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    public void RegisterPlayer(string playerName)
+    {
+        long id = Multiplayer.GetRemoteSenderId();
+        playerList.Add(id, playerName);
     }
 
     [Rpc(MultiplayerApi.RpcMode.Authority)]
     private void Peer_PeerConnected(long id)
     {
         GD.Print($"{id} conectado");
+        RegisterPlayer(CharName);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -45,12 +69,12 @@ public partial class Multiplayer : Node
         GD.Print("Test");
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void AddPlayer()
+    [Rpc(CallLocal = true)]
+    public void LoadWorld()
     {
-        GetTree().ChangeSceneToFile("res://Interface/scenario.tscn");
-        //var player = GetNode("/root/Player");
-        //GetNode("/root/Scenario").AddChild(player);
+        var scen = ResourceLoader.Load<PackedScene>("res://Interface/scenario.tscn").Instantiate<scenario>();
+        GetTree().Root.AddChild(scen);
+        GetNode<Control>("/root/Menu").Hide();
     }
 
     public void JoinServer()
@@ -84,14 +108,26 @@ public partial class Multiplayer : Node
     {
         var txtLabel = (Label)GetNode("/root/Menu/LblMessageStatus");
         txtLabel.Text = "Connected";
-        Rpc(nameof(SendMethods));
+        var id = Multiplayer.GetRemoteSenderId();
+        RpcId(id, nameof(LoadWorld));
+        Rpc(nameof(BeginGame));
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    private void SendMethods()
+    private void BeginGame()
     {
-        var x = Rpc(nameof(Testzin));
-        var y = Rpc(nameof(AddPlayer));
+        var scen = GetTree().Root.GetNode<scenario>("Scenario");
+        var playerScene = (PackedScene)ResourceLoader.Load("res://player.tscn");
+
+        foreach (var p in playerList)
+        {
+            var id = Multiplayer.GetRemoteSenderId();
+            var pl = playerScene.Instantiate<Player>();
+            pl.syncPos = new Vector2(1, 1);
+            pl.Name = p.Key.ToString();
+
+            scen.GetNode("Players").AddChild(pl);
+        }
     }
 
     public void GetName()

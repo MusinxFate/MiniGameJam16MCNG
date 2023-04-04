@@ -11,10 +11,10 @@ public partial class Test : Button
 
     private void Test_Pressed()
     {
-        var nameLineEdit = (Godot.LineEdit)GetNode("/root/Menu/Name");
-        var mpinfo = (Multiplayer)GetNode("/root/Multiplayer");
-        mpinfo.CharName = nameLineEdit.Text;
-        GetTree().ChangeSceneToFile("res://Interface/scenario.tscn");
+        //var nameLineEdit = (Godot.LineEdit)GetNode("/root/Menu/Name");
+        //var mpinfo = (Multiplayer)GetNode("/root/Multiplayer");
+        //mpinfo.CharName = nameLineEdit.Text;
+        //GetTree().ChangeSceneToFile("res://Interface/scenario.tscn");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

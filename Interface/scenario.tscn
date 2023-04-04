@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://drs35s8vhahqr"]
+[gd_scene load_steps=10 format=3 uid="uid://drs35s8vhahqr"]
 
 [ext_resource type="Script" path="res://Interface/scenario.cs" id="1_dgih0"]
 [ext_resource type="Texture2D" uid="uid://cc5xbyuxirdv0" path="res://Map/parallax-mountain-bg.png" id="1_qeaf5"]
@@ -8,7 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://b7t0cmiqu5lnn" path="res://Map/parallax-mountain-foreground-trees.png" id="5_7yyei"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_04xy3"]
-size = Vector2(0.99577, 0.291842)
+size = Vector2(1.18194, 0.20358)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6bbs"]
+size = Vector2(20, 650)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53bc5"]
+size = Vector2(18, 650)
 
 [node name="Scenario" type="Node2D"]
 script = ExtResource("1_dgih0")
@@ -54,10 +60,29 @@ rotation = 3.14159
 scale = Vector2(1157.42, -33.9652)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-0.001701, 0.503145)
+position = Vector2(-0.0310766, 0.459015)
 shape = SubResource("RectangleShape2D_04xy3")
 
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-64, 320)
+shape = SubResource("RectangleShape2D_j6bbs")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(1288, 320)
+shape = SubResource("RectangleShape2D_53bc5")
+
 [node name="Players" type="Node2D" parent="."]
+position = Vector2(56, 24)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../Players")
+
+[node name="Spawn" type="Node2D" parent="."]
+position = Vector2(80, 520)
+
+[node name="Point" type="Marker2D" parent="Spawn"]
+visible = false

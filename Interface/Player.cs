@@ -6,7 +6,7 @@ public partial class Player : CharacterBody2D
     public const float Speed = 300.0f;
     public const float JumpVelocity = -400.0f;
     [Export]
-    Vector2 syncPos = new Vector2();
+    public Vector2 syncPos = new Vector2();
     Inputs inputs = new Inputs();
 
 
@@ -21,7 +21,9 @@ public partial class Player : CharacterBody2D
         Inputs inps = (Inputs)GetNode("Inputs");
         Position = syncPos;
         if (StringExtensions.IsValidInt(Name))
-            GetNode("Inptus/InputsSync").SetMultiplayerAuthority(StringExtensions.ToInt(Name));
+        {
+            GetNode("Inputs/InputsSync").SetMultiplayerAuthority(int.Parse(Name));
+        }
 
         var infoMultiplayer = (Multiplayer)GetNode("/root/Multiplayer");
         var nameLabel = (Label)GetNode("CharName");
