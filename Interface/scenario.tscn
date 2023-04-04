@@ -20,6 +20,7 @@ size = Vector2(18, 650)
 script = ExtResource("1_dgih0")
 
 [node name="Parallax-mountain-bg" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(577, 323)
 scale = Vector2(4.22794, 4.075)
 texture = ExtResource("1_qeaf5")
