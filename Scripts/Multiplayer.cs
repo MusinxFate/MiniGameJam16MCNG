@@ -1,11 +1,12 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 public partial class Multiplayer : Node
 {
-    ENetMultiplayerPeer peer = new ENetMultiplayerPeer();
+    ENetMultiplayerPeer peer = null;
     public string CharName = "";
     Dictionary<long, string> playerList = new Dictionary<long, string>();
 
@@ -20,47 +21,52 @@ public partial class Multiplayer : Node
 
     public void CreateServer()
     {
+        peer = new ENetMultiplayerPeer();
         peer.CreateServer(4321, 999);
         MultiplayerApi mp = MultiplayerApi.CreateDefaultInterface();
         mp.MultiplayerPeer = peer;
         GetTree().SetMultiplayer(mp);
+    }
 
-        var txtLabel = (Label)GetNode("/root/Menu/LblMessageStatus");
-        txtLabel.Text = "Hosting...";
-
-
-        //var packedscenario = ResourceLoader.Load<PackedScene>("res://Interface/scenario.tscn");
-        //var scenarioobj = packedscenario.Instantiate<scenario>();
-        //GetTree().Root.AddChild(scenarioobj);
-        //GetTree().Root.RemoveChild(GetNode("Menu"));
-
-        LoadWorld();
-
-        var scenario = GetTree().Root.GetNode("Scenario");
-        PackedScene playerScene = ResourceLoader.Load<PackedScene>("res://player.tscn");
-
-        var spawnpos = scenario.GetNode<Marker2D>("Spawn/Point").Position;
-        var player = playerScene.Instantiate<Player>();
-        player.syncPos = spawnpos;
-        player.Position = spawnpos;
-        scenario.AddChild(player);
-
-
-        peer.PeerConnected += Peer_PeerConnected;
+    public void JoinServer()
+    {
+        peer = new ENetMultiplayerPeer();
+        peer.CreateClient("localhost", 4321);
+        MultiplayerApi mp = MultiplayerApi.CreateDefaultInterface();
+        mp.MultiplayerPeer = peer;
+        GetTree().SetMultiplayer(mp);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     public void RegisterPlayer(string playerName)
     {
+        if (Multiplayer.IsServer())
+        {
+            CreatePlayer(playerName);
+        }
+
         long id = Multiplayer.GetRemoteSenderId();
         playerList.Add(id, playerName);
     }
 
-    [Rpc(MultiplayerApi.RpcMode.Authority)]
+    public void CreatePlayer(string playerName)
+    {
+        var scen = GetTree().Root.GetNode<scenario>("Scenario");
+        var playerScene = (PackedScene)ResourceLoader.Load("res://player.tscn");
+
+        var id = Multiplayer.GetUniqueId();
+        var pl = playerScene.Instantiate<Player>();
+        pl.syncPos = new Vector2(80, 520);
+        pl.Name = id.ToString();
+        pl.SetPlayerNickname(playerName);
+
+        scen.GetNode("Players").AddChild(pl);
+    }
+
     private void Peer_PeerConnected(long id)
     {
         GD.Print($"{id} conectado");
-        RegisterPlayer(CharName);
+        RpcId(id, nameof(RegisterPlayer), CharName);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -69,7 +75,6 @@ public partial class Multiplayer : Node
         GD.Print("Test");
     }
 
-    [Rpc(CallLocal = true)]
     public void LoadWorld()
     {
         var scen = ResourceLoader.Load<PackedScene>("res://Interface/scenario.tscn").Instantiate<scenario>();
@@ -77,32 +82,7 @@ public partial class Multiplayer : Node
         GetNode<Control>("/root/Menu").Hide();
     }
 
-    public void JoinServer()
-    {
-        try
-        {
-            var test = peer.CreateClient("localhost", 4321);
-            if (test == Error.Ok)
-            {
-                MultiplayerApi mp = MultiplayerApi.CreateDefaultInterface();
-                mp.MultiplayerPeer = peer;
-                mp.ConnectedToServer += Mp_ConnectedToServer;
-                GetTree().SetMultiplayer(mp);
 
-            }
-            else
-            {
-                var txtLabel = (Label)GetNode("/root/Menu/LblMessageStatus");
-                txtLabel.Text = "Error while trying to connect.";
-            }
-        }
-        catch (Exception e)
-        {
-            var txtLabel = (Label)GetNode("/root/Menu/LblMessageStatus");
-            txtLabel.Text = "Error while trying to connect.";
-            GD.Print($"Error {e.Message}");
-        }
-    }
 
     private void Mp_ConnectedToServer()
     {
@@ -110,24 +90,17 @@ public partial class Multiplayer : Node
         txtLabel.Text = "Connected";
         var id = Multiplayer.GetRemoteSenderId();
         RpcId(id, nameof(LoadWorld));
-        Rpc(nameof(BeginGame));
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    private void BeginGame()
+    public void BeginGame()
     {
-        var scen = GetTree().Root.GetNode<scenario>("Scenario");
-        var playerScene = (PackedScene)ResourceLoader.Load("res://player.tscn");
+        LoadWorld();
 
-        foreach (var p in playerList)
+        if (Multiplayer.IsServer())
         {
-            var id = Multiplayer.GetRemoteSenderId();
-            var pl = playerScene.Instantiate<Player>();
-            pl.syncPos = new Vector2(1, 1);
-            pl.Name = p.Key.ToString();
-
-            scen.GetNode("Players").AddChild(pl);
+            CreatePlayer(CharName);
         }
+
     }
 
     public void GetName()

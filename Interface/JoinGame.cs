@@ -14,6 +14,7 @@ public partial class JoinGame : Button
         var x = (Multiplayer)GetNode("/root/Multiplayer");
         x.JoinServer();
         x.GetName();
+        x.BeginGame();
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -16,6 +16,11 @@ public partial class Player : CharacterBody2D
 
     private AnimationPlayer animPlayer; // Move a declaração do nó AnimationPlayer aqui fora.
 
+    public void SetPlayerNickname(string nickname)
+    {
+        GetNode<Label>("CharName").Text = nickname;
+    }
+
     public override void _Ready()
     {
         Inputs inps = (Inputs)GetNode("Inputs");
